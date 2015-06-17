@@ -22,7 +22,10 @@ def th(symbol):
     #print(price)
     valueDict[symbol] = price
 
-for s in symbolList[0:50]:
+symbolList.sort()
+
+# Currently limiting it to 100 requests to prevent Yahoo from yelling at us
+for s in symbolList[0:100]:
     request = Thread(target=th,args=(s,))
     request.start()
     activeThreads.append(request)
@@ -30,5 +33,6 @@ for s in symbolList[0:50]:
 for thread in activeThreads:
     thread.join()
 
-symbolList.sort()
-StockValuesOut("Results/SampleOut.txt", valueDict, symbolList)
+# Make sure we are only passing the first 100 elements of symbolList in since we only
+# populated the valueDict with those entries. 
+StockValuesOut("Results/SampleOut.txt", valueDict, symbolList[0:100])
