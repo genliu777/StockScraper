@@ -1,7 +1,6 @@
 import urllib.request
 import re
 import os.path
-
 from threading import Thread
 from GetCompanyData import getList
 from DataOut import StockValuesOut
