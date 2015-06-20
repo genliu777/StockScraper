@@ -21,11 +21,11 @@ def th(symbol):
     price = re.split(regStockValue, htmltext)[1].split("</span>")[0]
     #print(price)
     valueDict[symbol] = price
-
 symbolList.sort()
 
-# Currently limiting it to 100 requests to prevent Yahoo from yelling at us
-for s in symbolList[0:100]:
+# Currently limiting it to ~100-500 requests to prevent Yahoo from yelling at us
+limit = 500;
+for s in symbolList[0:limit]:
     request = Thread(target=th,args=(s,))
     request.start()
     activeThreads.append(request)
@@ -35,4 +35,5 @@ for thread in activeThreads:
 
 # Make sure we are only passing the first 100 elements of symbolList in since we only
 # populated the valueDict with those entries. 
-StockValuesOut("Results/SampleOut.txt", valueDict, symbolList[0:100])
+StockValuesOut("Results/SampleOut.txt", valueDict, symbolList[0:limit])
+print("Done")
